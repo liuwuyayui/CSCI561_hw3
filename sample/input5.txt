@@ -1,0 +1,5 @@
+1
+B(Lew,Yang)
+2
+A(x,y) => B(x,y)
+A(Lew,Yang)
