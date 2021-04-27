@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +6,7 @@ public class Homework {
     public static final boolean SHOW = false;
     
     public static void main(String[] args) {
-        List<String> input = readInput("sample/input4.txt");
+        List<String> input = readInput("input.txt");
     
         List<Literal> queries = new ArrayList<>();
         KB kb = new KB();
@@ -20,12 +17,16 @@ public class Homework {
         kb.printKB();// TODO: remove
         
         Resolution resolution = new Resolution(kb);
-        List<String> result = new ArrayList<>();
+
+        StringBuilder sb = new StringBuilder();
         for (Literal query : queries) {
-            result.add(Boolean.toString(resolution.resolution_refutation(query)));
+            boolean result = resolution.resolution_refutation(query);
+            String resultInStr = result ? "TRUE" : "FALSE";
+            sb.append(resultInStr);
+            sb.append("\n");
         }
-        System.out.println(result);
-        
+        sb.deleteCharAt(sb.length() - 1);
+        writeToFile(sb.toString(), "", "output.txt");
     }
     
     private static void parseQueryAndKB(List<String> input, List<Literal> queries, KB kb) {
@@ -54,6 +55,16 @@ public class Homework {
             e.printStackTrace();
         }
         return input;
+    }
+    
+    private static void writeToFile(String str, String destPath, String fileName) {
+        try (FileWriter fileWriter = new FileWriter(destPath + fileName);
+             BufferedWriter output = new BufferedWriter(fileWriter);
+        ) {
+            output.write(str);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

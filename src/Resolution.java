@@ -20,6 +20,9 @@ public class Resolution {
         
         while (true) {
             Set<Sentence> newlyGen = new HashSet<>();
+            if (cleanKB.sentences.size() > 50000) {
+                return false;
+            }
             for (int i = 0; i < cleanKB.sentences.size(); i++) {
                 for (int j = i + 1; j < cleanKB.sentences.size(); j++) {
                     Sentence s1 = cleanKB.sentences.get(i);
